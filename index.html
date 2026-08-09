@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus — the single entry point to Harith Kavish's systems: VM, VR, and more to come.">
+    <meta name="author" content="Harith Kavish">
+    <meta name="theme-color" content="#38bdf8">
+
+    <meta property="og:title" content="Nexus — Personal Digital Ecosystem">
+    <meta property="og:description" content="One entry point to all my systems.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nexus.harithkavish.com/">
+    <meta property="og:image" content="https://harithkavish.com/favicon.svg">
+
+    <link rel="icon" type="image/svg+xml" href="https://harithkavish.com/favicon.svg">
+    <title>Nexus — Harith Kavish</title>
+
+    <!-- Harith Design System v1.0.0 -->
+    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/tokens.css">
+    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/base.css">
+    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/components.css">
+    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/utils.css">
+</head>
+
+<body>
+    <harith-header site-title="Nexus" site-tagline="Personal Digital Ecosystem"
+        nav-links='[{"label":"harithkavish.com","href":"https://harithkavish.com"}]'>
+    </harith-header>
+
+    <main>
+        <div class="main-center">
+            <div class="intro">
+                <p class="tagline">Personal Digital Ecosystem</p>
+                <p class="subtitle">One entry point to all my systems.</p>
+            </div>
+
+            <div class="center-buttons">
+                <!-- Systems. To add one: copy a link below and point it at its subdomain.
+                     Add data-status="<url>" only when that system has a real status endpoint. -->
+                <div class="footer-buttons">
+                    <a href="https://vm.harithkavish.com" class="footer-btn" title="Virtual Computing Environment">
+                        <span class="status-dot unknown" data-system="vm"></span>
+                        VM
+                    </a>
+                    <a href="https://vr.harithkavish.com" class="footer-btn" title="Virtual Reality Environment">
+                        <span class="status-dot unknown" data-system="vr"></span>
+                        VR
+                    </a>
+                </div>
+
+                <div class="subtitle" style="font-size: var(--font-size-sm);">
+                    <span class="status-dot online"></span>Online &nbsp;
+                    <span class="status-dot unknown"></span>Unknown &nbsp;
+                    <span class="status-dot offline"></span>Offline
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <harith-footer links='[{"label":"harithkavish.com","href":"https://harithkavish.com"}]'></harith-footer>
+
+    <!-- Harith Design System Modules -->
+    <script src="https://harithkavish.com/harith-design-system/v1.0.0/theme-toggle.js"></script>
+    <script src="https://harithkavish.com/harith-design-system/v1.0.0/harith-shell.js"></script>
+
+    <script>
+        // Live status for any system that declares a data-status endpoint.
+        // Dots stay grey (unknown) until one does — nothing is assumed to be up.
+        document.querySelectorAll('.status-dot[data-status]').forEach(function (dot) {
+            fetch(dot.dataset.status, { method: 'GET', mode: 'cors' })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    var status = data && typeof data.status === 'string' ? data.status.trim().toLowerCase() : '';
+                    dot.className = 'status-dot ' + (status === 'online' || status === 'offline' ? status : 'unknown');
+                })
+                .catch(function () { dot.className = 'status-dot unknown'; });
+        });
+    </script>
+</body>
+
+</html>
