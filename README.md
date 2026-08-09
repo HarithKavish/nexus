@@ -1,40 +1,31 @@
 # Nexus
 
-Home for my systems — [nexus.harithkavish.com](https://nexus.harithkavish.com).
+One way into the systems I run — [nexus.harithkavish.com](https://nexus.harithkavish.com).
 
-```
-NEXUS
- ├── VM   vm.harithkavish.com
- └── VR   vr.harithkavish.com
-```
+A single static `index.html`. No build step, no dependencies. It loads
+`style.css` and the logo from harithkavish.com, so it follows the main site's
+theme automatically — light/dark via `data-theme`, same header, cards and pills.
 
-One static `index.html`. No build step, no dependencies. Styling comes from the
-Harith Design System hosted on the main site, so Nexus stays in sync with
-harithkavish.com automatically.
-
-GitHub Pages serves it straight from the branch root (Settings → Pages → Deploy
-from a branch → `main` / `/`). `CNAME` pins the domain.
+Deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`.
 
 ## Adding a system
 
-Copy one link in `index.html` and point it at its subdomain:
+Copy one card in `index.html` and change five things — pill, route, title,
+summary, link:
 
 ```html
-<a href="https://ai.harithkavish.com" class="footer-btn" title="What it is">
-    <span class="status-dot unknown" data-system="ai"></span>
-    AI
-</a>
+<article class="card ecosystem-card">
+    <div class="card__topline">
+        <span class="pill pill--live">Live</span>
+        <span class="card__route">api.harithkavish.com</span>
+    </div>
+    <h3 class="card__title">API</h3>
+    <p class="card__body">What it does.</p>
+    <a class="card__link" href="https://api.harithkavish.com">Visit api.harithkavish.com</a>
+</article>
 ```
 
-## Status dots
+Pill classes: `pill--live`, `pill--progress`, `pill--planned`, `pill--neutral`.
 
-Grey by default — nothing is assumed to be online. When a system exposes a status
-endpoint that returns `{"status": "online"}` (CORS-readable from this domain), add
-it to that system's dot and it goes live:
-
-```html
-<span class="status-dot unknown" data-status="https://vm.harithkavish.com/api/status"></span>
-```
-
-Anything else — offline, a timeout, a bad response — leaves the dot grey. Same
-contract the main site uses for SkinNet Analyzer.
+Statuses and summaries here mirror the `ecosystem` list in the main site's
+`site-data.js`. Keep the two in step when a system's status changes.

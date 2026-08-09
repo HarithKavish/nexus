@@ -1,83 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nexus — the single entry point to Harith Kavish's systems: VM, VR, and more to come.">
-    <meta name="author" content="Harith Kavish">
-    <meta name="theme-color" content="#38bdf8">
-
-    <meta property="og:title" content="Nexus — Personal Digital Ecosystem">
-    <meta property="og:description" content="One entry point to all my systems.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="Nexus is the single entry point to the systems running across the Harith Kavish ecosystem.">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#f5f1ea" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b1014" media="(prefers-color-scheme: dark)">
+    <meta property="og:site_name" content="Harith Kavish">
+    <meta property="og:title" content="Nexus">
+    <meta property="og:description" content="One entry point to every system in the ecosystem.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nexus.harithkavish.com/">
     <meta property="og:image" content="https://harithkavish.com/favicon.svg">
-
-    <link rel="icon" type="image/svg+xml" href="https://harithkavish.com/favicon.svg">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Nexus">
+    <meta name="twitter:description" content="One entry point to every system in the ecosystem.">
+    <meta name="twitter:image" content="https://harithkavish.com/favicon.svg">
+    <link rel="canonical" href="https://nexus.harithkavish.com/">
+    <link rel="icon" href="https://harithkavish.com/favicon.svg" type="image/svg+xml">
+    <!-- Shared theme from the main site, so Nexus follows it automatically. -->
+    <link rel="stylesheet" href="https://harithkavish.com/style.css">
+    <script>
+        document.documentElement.dataset.theme = localStorage.getItem('harithkavish-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    </script>
     <title>Nexus — Harith Kavish</title>
-
-    <!-- Harith Design System v1.0.0 -->
-    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/tokens.css">
-    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/base.css">
-    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/components.css">
-    <link rel="stylesheet" href="https://harithkavish.com/harith-design-system/v1.0.0/utils.css">
 </head>
-
-<body>
-    <harith-header site-title="Nexus" site-tagline="Personal Digital Ecosystem"
-        nav-links='[{"label":"harithkavish.com","href":"https://harithkavish.com"}]'>
-    </harith-header>
-
-    <main>
-        <div class="main-center">
-            <div class="intro">
-                <p class="tagline">Personal Digital Ecosystem</p>
-                <p class="subtitle">One entry point to all my systems.</p>
-            </div>
-
-            <div class="center-buttons">
-                <!-- Systems. To add one: copy a link below and point it at its subdomain.
-                     Add data-status="<url>" only when that system has a real status endpoint. -->
-                <div class="footer-buttons">
-                    <a href="https://vm.harithkavish.com" class="footer-btn" title="Virtual Computing Environment">
-                        <span class="status-dot unknown" data-system="vm"></span>
-                        VM
-                    </a>
-                    <a href="https://vr.harithkavish.com" class="footer-btn" title="Virtual Reality Environment">
-                        <span class="status-dot unknown" data-system="vr"></span>
-                        VR
-                    </a>
-                </div>
-
-                <div class="subtitle" style="font-size: var(--font-size-sm);">
-                    <span class="status-dot online"></span>Online &nbsp;
-                    <span class="status-dot unknown"></span>Unknown &nbsp;
-                    <span class="status-dot offline"></span>Offline
+<body data-page="nexus">
+    <div class="site-shell">
+        <header class="site-header">
+            <div class="site-header__inner">
+                <a class="brand" href="https://harithkavish.com/">
+                    <img class="brand__mark" src="https://harithkavish.com/logo.png" alt="" aria-hidden="true">
+                    <span class="brand__text">
+                        <span class="brand__name">Harith Kavish</span>
+                        <span class="brand__descriptor">Nexus</span>
+                    </span>
+                </a>
+                <div class="site-header__actions">
+                    <nav class="site-nav" aria-label="Primary">
+                        <a class="site-nav__link" href="https://harithkavish.com/products.html">Products</a>
+                        <a class="site-nav__link" href="https://harithkavish.com/updates.html">Updates</a>
+                        <a class="site-nav__link" href="https://harithkavish.com/status.html">Status</a>
+                        <a class="site-nav__link" href="https://harithkavish.com/contact.html">Contact</a>
+                    </nav>
+                    <button type="button" class="theme-toggle" data-theme-toggle="true" aria-label="Switch to dark mode">Dark mode</button>
                 </div>
             </div>
-        </div>
-    </main>
+        </header>
 
-    <harith-footer links='[{"label":"harithkavish.com","href":"https://harithkavish.com"}]'></harith-footer>
+        <main class="site-main">
+            <section class="hero">
+                <p class="hero__eyebrow">Nexus</p>
+                <h1 class="hero__title">One way in</h1>
+                <p class="hero__lead">The entry point to the systems I run. Each one stays independent at its own subdomain; Nexus is where they meet.</p>
+            </section>
 
-    <!-- Harith Design System Modules -->
-    <script src="https://harithkavish.com/harith-design-system/v1.0.0/theme-toggle.js"></script>
-    <script src="https://harithkavish.com/harith-design-system/v1.0.0/harith-shell.js"></script>
+            <section class="section">
+                <div class="section-head">
+                    <h2 class="section-head__title">Systems</h2>
+                    <p class="section-head__lead">Each subdomain is a focused, single-purpose service that shares the same design language.</p>
+                </div>
+
+                <!-- To add a system: copy one card and change the pill, route, title, summary and link. -->
+                <div class="card-grid">
+                    <article class="card ecosystem-card">
+                        <div class="card__topline">
+                            <span class="pill pill--live">Live</span>
+                            <span class="card__route">vm.harithkavish.com</span>
+                        </div>
+                        <h3 class="card__title">VM</h3>
+                        <p class="card__body">A GUI connector for CLI cloud VMs, like Oracle Cloud. Sign in with your own key to reach your own VM; the connection runs entirely locally.</p>
+                        <a class="card__link" href="https://vm.harithkavish.com">Visit vm.harithkavish.com</a>
+                    </article>
+
+                    <article class="card ecosystem-card">
+                        <div class="card__topline">
+                            <span class="pill pill--live">Live</span>
+                            <span class="card__route">vr.harithkavish.com</span>
+                        </div>
+                        <h3 class="card__title">VR</h3>
+                        <p class="card__body">A mobile VR platform.</p>
+                        <a class="card__link" href="https://vr.harithkavish.com">Visit vr.harithkavish.com</a>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="site-footer__inner">
+                <p class="site-footer__copy">© <span data-year>2026</span> Harith Kavish</p>
+                <nav class="site-footer__nav" aria-label="Footer">
+                    <a class="site-nav__link" href="https://harithkavish.com/">Home</a>
+                    <a class="site-nav__link" href="https://harithkavish.com/products.html">Products</a>
+                    <a class="site-nav__link" href="https://harithkavish.com/legal.html">Legal</a>
+                    <a class="site-nav__link" href="https://harithkavish.com/status.html">Status</a>
+                </nav>
+            </div>
+        </footer>
+    </div>
 
     <script>
-        // Live status for any system that declares a data-status endpoint.
-        // Dots stay grey (unknown) until one does — nothing is assumed to be up.
-        document.querySelectorAll('.status-dot[data-status]').forEach(function (dot) {
-            fetch(dot.dataset.status, { method: 'GET', mode: 'cors' })
-                .then(function (res) { return res.json(); })
-                .then(function (data) {
-                    var status = data && typeof data.status === 'string' ? data.status.trim().toLowerCase() : '';
-                    dot.className = 'status-dot ' + (status === 'online' || status === 'offline' ? status : 'unknown');
-                })
-                .catch(function () { dot.className = 'status-dot unknown'; });
-        });
+        (function () {
+            var key = 'harithkavish-theme';
+            var button = document.querySelector('[data-theme-toggle]');
+
+            function applyTheme(theme, persist) {
+                document.documentElement.dataset.theme = theme;
+                if (persist) {
+                    localStorage.setItem(key, theme);
+                }
+                button.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+                button.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+
+            applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light', false);
+
+            button.addEventListener('click', function () {
+                applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true);
+            });
+
+            document.querySelector('[data-year]').textContent = new Date().getFullYear();
+        })();
     </script>
 </body>
-
 </html>
