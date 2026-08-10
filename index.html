@@ -26,7 +26,9 @@
         /* The only component the shared theme doesn't have: an app tile. Built from its tokens. */
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+            /* Fixed tracks rather than 1fr, so tiles stay sized to the logo
+               instead of stretching to fill the row. */
+            grid-template-columns: repeat(auto-fill, min(100%, 302px));
             gap: 0.85rem;
         }
 
