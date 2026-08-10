@@ -26,7 +26,7 @@
         /* The only component the shared theme doesn't have: an app tile. Built from its tokens. */
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
             gap: 1rem;
         }
 
@@ -55,14 +55,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 4.5rem;
-            height: 4.5rem;
+            width: 11.25rem;
+            height: 11.25rem;
         }
 
         /* Only for a system serving no icon, so its tile still reads as a tile. */
         .app-tile__icon.is-empty {
             border: 1px dashed var(--border);
-            border-radius: 1.1rem;
+            border-radius: 1.6rem;
         }
 
         /* The site's own favicon, revealed only once it actually loads. */
