@@ -48,18 +48,41 @@
         }
 
         .app-tile__icon {
+            position: relative;
             flex: none;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             width: 3rem;
             height: 3rem;
+            overflow: hidden;
             border: 1px solid var(--border);
             border-radius: 0.9rem;
             background: var(--pill-bg);
             color: var(--accent);
             font-size: 0.95rem;
             font-weight: 650;
+        }
+
+        /* The site's own favicon, revealed only once it actually loads. */
+        .app-tile__favicon {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0.55rem;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 160ms ease;
+        }
+
+        .app-tile__icon.has-favicon .app-tile__favicon {
+            opacity: 1;
+        }
+
+        /* Initials stay as the fallback for anything not serving one. */
+        .app-tile__icon.has-favicon .app-tile__initials {
+            opacity: 0;
         }
 
         .app-tile__text {
@@ -111,7 +134,10 @@
             <!-- To add a system: copy one tile and change the initials, name and link. -->
             <div class="app-grid">
                 <a class="app-tile" href="https://vm.harithkavish.com">
-                    <span class="app-tile__icon" aria-hidden="true">VM</span>
+                    <span class="app-tile__icon" aria-hidden="true">
+                        <span class="app-tile__initials">VM</span>
+                        <img class="app-tile__favicon" src="https://vm.harithkavish.com/favicon.svg" alt="" loading="lazy" decoding="async">
+                    </span>
                     <span class="app-tile__text">
                         <span class="app-tile__name">VM</span>
                         <span class="app-tile__meta">vm.harithkavish.com</span>
@@ -119,7 +145,10 @@
                 </a>
 
                 <a class="app-tile" href="https://vr.harithkavish.com">
-                    <span class="app-tile__icon" aria-hidden="true">VR</span>
+                    <span class="app-tile__icon" aria-hidden="true">
+                        <span class="app-tile__initials">VR</span>
+                        <img class="app-tile__favicon" src="https://vr.harithkavish.com/favicon.svg" alt="" loading="lazy" decoding="async">
+                    </span>
                     <span class="app-tile__text">
                         <span class="app-tile__name">VR</span>
                         <span class="app-tile__meta">vr.harithkavish.com</span>
@@ -161,6 +190,27 @@
             });
 
             document.querySelector('[data-year]').textContent = new Date().getFullYear();
+
+            // Show a tile's favicon only if it loads. A missing one leaves the initials.
+            document.querySelectorAll('.app-tile__favicon').forEach(function (icon) {
+                function reveal() {
+                    icon.parentNode.classList.add('has-favicon');
+                }
+
+                if (icon.complete) {
+                    if (icon.naturalWidth > 0) {
+                        reveal();
+                    } else {
+                        icon.remove();
+                    }
+                    return;
+                }
+
+                icon.addEventListener('load', reveal);
+                icon.addEventListener('error', function () {
+                    icon.remove();
+                });
+            });
         })();
     </script>
 </body>
