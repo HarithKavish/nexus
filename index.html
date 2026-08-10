@@ -26,16 +26,19 @@
         /* The only component the shared theme doesn't have: an app tile. Built from its tokens. */
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
             gap: 1rem;
         }
 
+        /* The logo leads: centred, large, with the name reading as its caption. */
         .app-tile {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 0.9rem;
+            gap: 1.1rem;
             min-width: 0;
-            padding: 1rem 1.1rem;
+            padding: 1.9rem 1.25rem 1.6rem;
+            text-align: center;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 1.4rem;
@@ -43,7 +46,7 @@
         }
 
         .app-tile:hover {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
             box-shadow: var(--shadow-strong);
         }
 
@@ -52,8 +55,14 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 3rem;
-            height: 3rem;
+            width: 4.5rem;
+            height: 4.5rem;
+        }
+
+        /* Only for a system serving no icon, so its tile still reads as a tile. */
+        .app-tile__icon.is-empty {
+            border: 1px dashed var(--border);
+            border-radius: 1.1rem;
         }
 
         /* The site's own favicon, revealed only once it actually loads. */
@@ -72,16 +81,19 @@
         .app-tile__text {
             display: flex;
             flex-direction: column;
+            gap: 0.15rem;
             min-width: 0;
+            max-width: 100%;
         }
 
         .app-tile__name {
+            font-size: 1.05rem;
             font-weight: 650;
         }
 
         .app-tile__meta {
             color: var(--muted);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -181,9 +193,11 @@
                 var attempt = 0;
 
                 function tryNext() {
-                    // Nothing served an icon, so the tile keeps an empty mark.
                     if (attempt < iconPaths.length) {
                         icon.src = origin + iconPaths[attempt++];
+                    } else {
+                        // Nothing served an icon, so the tile keeps an empty mark.
+                        icon.parentNode.classList.add('is-empty');
                     }
                 }
 
