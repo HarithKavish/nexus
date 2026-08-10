@@ -48,26 +48,18 @@
         }
 
         .app-tile__icon {
-            position: relative;
             flex: none;
             display: inline-flex;
-            align-items: center;
-            justify-content: center;
             width: 3rem;
             height: 3rem;
             overflow: hidden;
             border: 1px solid var(--border);
             border-radius: 0.9rem;
             background: var(--pill-bg);
-            color: var(--accent);
-            font-size: 0.95rem;
-            font-weight: 650;
         }
 
         /* The site's own favicon, revealed only once it actually loads. */
         .app-tile__favicon {
-            position: absolute;
-            inset: 0;
             width: 100%;
             height: 100%;
             padding: 0.55rem;
@@ -76,13 +68,8 @@
             transition: opacity 160ms ease;
         }
 
-        .app-tile__icon.has-favicon .app-tile__favicon {
+        .app-tile__favicon.is-loaded {
             opacity: 1;
-        }
-
-        /* Initials stay as the fallback for anything not serving one. */
-        .app-tile__icon.has-favicon .app-tile__initials {
-            opacity: 0;
         }
 
         .app-tile__text {
@@ -131,12 +118,11 @@
                 <p class="section-head__lead">Connected systems. One place.</p>
             </div>
 
-            <!-- To add a system: copy one tile and change the initials, name and link. -->
+            <!-- To add a system: copy one tile and change the link, origin, name and host. -->
             <div class="app-grid">
                 <a class="app-tile" href="https://vm.harithkavish.com">
                     <span class="app-tile__icon" aria-hidden="true">
-                        <span class="app-tile__initials">VM</span>
-                        <img class="app-tile__favicon" src="https://vm.harithkavish.com/favicon.svg" alt="" loading="lazy" decoding="async">
+                        <img class="app-tile__favicon" data-origin="https://vm.harithkavish.com" alt="" decoding="async">
                     </span>
                     <span class="app-tile__text">
                         <span class="app-tile__name">VM</span>
@@ -146,8 +132,7 @@
 
                 <a class="app-tile" href="https://vr.harithkavish.com">
                     <span class="app-tile__icon" aria-hidden="true">
-                        <span class="app-tile__initials">VR</span>
-                        <img class="app-tile__favicon" src="https://vr.harithkavish.com/favicon.svg" alt="" loading="lazy" decoding="async">
+                        <img class="app-tile__favicon" data-origin="https://vr.harithkavish.com" alt="" decoding="async">
                     </span>
                     <span class="app-tile__text">
                         <span class="app-tile__name">VR</span>
@@ -191,25 +176,25 @@
 
             document.querySelector('[data-year]').textContent = new Date().getFullYear();
 
-            // Show a tile's favicon only if it loads. A missing one leaves the initials.
+            // Whatever icon a system serves, in the order browsers themselves look.
+            var iconPaths = ['/favicon.svg', '/favicon.ico', '/favicon.png', '/apple-touch-icon.png'];
+
             document.querySelectorAll('.app-tile__favicon').forEach(function (icon) {
-                function reveal() {
-                    icon.parentNode.classList.add('has-favicon');
-                }
+                var origin = icon.dataset.origin;
+                var attempt = 0;
 
-                if (icon.complete) {
-                    if (icon.naturalWidth > 0) {
-                        reveal();
-                    } else {
-                        icon.remove();
+                function tryNext() {
+                    // Nothing served an icon, so the tile keeps an empty mark.
+                    if (attempt < iconPaths.length) {
+                        icon.src = origin + iconPaths[attempt++];
                     }
-                    return;
                 }
 
-                icon.addEventListener('load', reveal);
-                icon.addEventListener('error', function () {
-                    icon.remove();
+                icon.addEventListener('load', function () {
+                    icon.classList.add('is-loaded');
                 });
+                icon.addEventListener('error', tryNext);
+                tryNext();
             });
         })();
     </script>
