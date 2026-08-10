@@ -1,31 +1,28 @@
 # Nexus
 
-One way into the systems I run — [nexus.harithkavish.com](https://nexus.harithkavish.com).
+The launcher for the systems I run — [nexus.harithkavish.com](https://nexus.harithkavish.com).
 
 A single static `index.html`. No build step, no dependencies. It loads
 `style.css` and the logo from harithkavish.com, so it follows the main site's
-theme automatically — light/dark via `data-theme`, same header, cards and pills.
+theme automatically — light/dark via `data-theme`, same header and footer.
 
 Deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`.
 
 ## Adding a system
 
-Copy one card in `index.html` and change five things — pill, route, title,
-summary, link:
+Copy one tile in `index.html` and change three things — initials, name, link:
 
 ```html
-<article class="card ecosystem-card">
-    <div class="card__topline">
-        <span class="pill pill--live">Live</span>
-        <span class="card__route">api.harithkavish.com</span>
-    </div>
-    <h3 class="card__title">API</h3>
-    <p class="card__body">What it does.</p>
-    <a class="card__link" href="https://api.harithkavish.com">Visit api.harithkavish.com</a>
-</article>
+<a class="app-tile" href="https://api.harithkavish.com">
+    <span class="app-tile__icon" aria-hidden="true">API</span>
+    <span class="app-tile__text">
+        <span class="app-tile__name">API</span>
+        <span class="app-tile__meta">api.harithkavish.com</span>
+    </span>
+</a>
 ```
 
-Pill classes: `pill--live`, `pill--progress`, `pill--planned`, `pill--neutral`.
+The grid fills itself, so tiles reflow on their own as more are added.
 
-Statuses and summaries here mirror the `ecosystem` list in the main site's
-`site-data.js`. Keep the two in step when a system's status changes.
+The `.app-tile` styles are the only CSS this page defines — everything else comes
+from the shared theme, and they are built from its tokens so they follow it.

@@ -4,24 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <meta name="description" content="Nexus is the single entry point to the systems running across the Harith Kavish ecosystem.">
+    <meta name="description" content="Nexus is the launcher for every system running on the Harith Kavish ecosystem.">
     <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#f5f1ea" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0b1014" media="(prefers-color-scheme: dark)">
     <meta property="og:site_name" content="Harith Kavish">
     <meta property="og:title" content="Nexus">
-    <meta property="og:description" content="One entry point to every system in the ecosystem.">
+    <meta property="og:description" content="Every system, one click away.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nexus.harithkavish.com/">
     <meta property="og:image" content="https://harithkavish.com/favicon.svg">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Nexus">
-    <meta name="twitter:description" content="One entry point to every system in the ecosystem.">
+    <meta name="twitter:description" content="Every system, one click away.">
     <meta name="twitter:image" content="https://harithkavish.com/favicon.svg">
     <link rel="canonical" href="https://nexus.harithkavish.com/">
     <link rel="icon" href="https://harithkavish.com/favicon.svg" type="image/svg+xml">
     <!-- Shared theme from the main site, so Nexus follows it automatically. -->
     <link rel="stylesheet" href="https://harithkavish.com/style.css">
+    <style>
+        /* The only component the shared theme doesn't have: an app tile. Built from its tokens. */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .app-tile {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            min-width: 0;
+            padding: 1rem 1.1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1.4rem;
+            box-shadow: var(--shadow);
+        }
+
+        .app-tile:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .app-tile__icon {
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border: 1px solid var(--border);
+            border-radius: 0.9rem;
+            background: var(--pill-bg);
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 650;
+        }
+
+        .app-tile__text {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .app-tile__name {
+            font-weight: 650;
+        }
+
+        .app-tile__meta {
+            color: var(--muted);
+            font-size: 0.85rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
     <script>
         document.documentElement.dataset.theme = localStorage.getItem('harithkavish-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     </script>
@@ -39,53 +97,34 @@
                     </span>
                 </a>
                 <div class="site-header__actions">
-                    <nav class="site-nav" aria-label="Primary">
-                        <a class="site-nav__link" href="https://harithkavish.com/products.html">Products</a>
-                        <a class="site-nav__link" href="https://harithkavish.com/updates.html">Updates</a>
-                        <a class="site-nav__link" href="https://harithkavish.com/status.html">Status</a>
-                        <a class="site-nav__link" href="https://harithkavish.com/contact.html">Contact</a>
-                    </nav>
                     <button type="button" class="theme-toggle" data-theme-toggle="true" aria-label="Switch to dark mode">Dark mode</button>
                 </div>
             </div>
         </header>
 
         <main class="site-main">
-            <section class="hero">
-                <p class="hero__eyebrow">Nexus</p>
-                <h1 class="hero__title">One way in</h1>
-                <p class="hero__lead">The entry point to the systems I run. Each one stays independent at its own subdomain; Nexus is where they meet.</p>
-            </section>
+            <div class="section-head">
+                <h1 class="section-head__title">Apps</h1>
+            </div>
 
-            <section class="section">
-                <div class="section-head">
-                    <h2 class="section-head__title">Systems</h2>
-                    <p class="section-head__lead">Each subdomain is a focused, single-purpose service that shares the same design language.</p>
-                </div>
+            <!-- To add a system: copy one tile and change the initials, name and link. -->
+            <div class="app-grid">
+                <a class="app-tile" href="https://vm.harithkavish.com">
+                    <span class="app-tile__icon" aria-hidden="true">VM</span>
+                    <span class="app-tile__text">
+                        <span class="app-tile__name">VM</span>
+                        <span class="app-tile__meta">vm.harithkavish.com</span>
+                    </span>
+                </a>
 
-                <!-- To add a system: copy one card and change the pill, route, title, summary and link. -->
-                <div class="card-grid">
-                    <article class="card ecosystem-card">
-                        <div class="card__topline">
-                            <span class="pill pill--live">Live</span>
-                            <span class="card__route">vm.harithkavish.com</span>
-                        </div>
-                        <h3 class="card__title">VM</h3>
-                        <p class="card__body">A GUI connector for CLI cloud VMs, like Oracle Cloud. Sign in with your own key to reach your own VM; the connection runs entirely locally.</p>
-                        <a class="card__link" href="https://vm.harithkavish.com">Visit vm.harithkavish.com</a>
-                    </article>
-
-                    <article class="card ecosystem-card">
-                        <div class="card__topline">
-                            <span class="pill pill--live">Live</span>
-                            <span class="card__route">vr.harithkavish.com</span>
-                        </div>
-                        <h3 class="card__title">VR</h3>
-                        <p class="card__body">A mobile VR platform.</p>
-                        <a class="card__link" href="https://vr.harithkavish.com">Visit vr.harithkavish.com</a>
-                    </article>
-                </div>
-            </section>
+                <a class="app-tile" href="https://vr.harithkavish.com">
+                    <span class="app-tile__icon" aria-hidden="true">VR</span>
+                    <span class="app-tile__text">
+                        <span class="app-tile__name">VR</span>
+                        <span class="app-tile__meta">vr.harithkavish.com</span>
+                    </span>
+                </a>
+            </div>
         </main>
 
         <footer class="site-footer">
@@ -93,9 +132,8 @@
                 <p class="site-footer__copy">© <span data-year>2026</span> Harith Kavish</p>
                 <nav class="site-footer__nav" aria-label="Footer">
                     <a class="site-nav__link" href="https://harithkavish.com/">Home</a>
-                    <a class="site-nav__link" href="https://harithkavish.com/products.html">Products</a>
-                    <a class="site-nav__link" href="https://harithkavish.com/legal.html">Legal</a>
                     <a class="site-nav__link" href="https://harithkavish.com/status.html">Status</a>
+                    <a class="site-nav__link" href="https://harithkavish.com/legal.html">Legal</a>
                 </nav>
             </div>
         </footer>
