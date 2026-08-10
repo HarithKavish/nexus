@@ -33,7 +33,8 @@
         .app-tile {
             display: flex;
             align-items: center;
-            gap: 0.9rem;
+            /* Wide enough that the oversized icon still clears the text. */
+            gap: 1.1rem;
             min-width: 0;
             padding: 1rem 1.1rem;
             background: var(--surface);
@@ -47,29 +48,42 @@
             box-shadow: var(--shadow-strong);
         }
 
+        /* A small backing plate — the icon itself sits proud of it. */
         .app-tile__icon {
+            position: relative;
             flex: none;
-            display: inline-flex;
-            width: 3rem;
-            height: 3rem;
-            overflow: hidden;
+            width: 2.5rem;
+            height: 2.5rem;
             border: 1px solid var(--border);
-            border-radius: 0.9rem;
+            border-radius: 0.75rem;
             background: var(--pill-bg);
+            --icon-lift: rgba(15, 23, 42, 0.22);
+        }
+
+        :root[data-theme='dark'] .app-tile__icon {
+            --icon-lift: rgba(0, 0, 0, 0.45);
         }
 
         /* The site's own favicon, revealed only once it actually loads. */
         .app-tile__favicon {
-            width: 100%;
-            height: 100%;
-            padding: 0.55rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 3.25rem;
+            height: 3.25rem;
             object-fit: contain;
+            transform: translate(-50%, -50%) translateY(-0.35rem);
+            filter: drop-shadow(0 6px 12px var(--icon-lift));
             opacity: 0;
-            transition: opacity 160ms ease;
+            transition: opacity 160ms ease, transform 160ms ease;
         }
 
         .app-tile__favicon.is-loaded {
             opacity: 1;
+        }
+
+        .app-tile:hover .app-tile__favicon {
+            transform: translate(-50%, -50%) translateY(-0.55rem);
         }
 
         .app-tile__text {
