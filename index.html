@@ -72,6 +72,31 @@
             border-radius: 1.1rem;
         }
 
+        .app-tile__icon--search.is-empty {
+            position: relative;
+            color: var(--accent);
+        }
+
+        .app-tile__icon--search.is-empty::before {
+            content: '';
+            width: 48%;
+            height: 48%;
+            border: 0.42rem solid currentColor;
+            border-radius: 50%;
+        }
+
+        .app-tile__icon--search.is-empty::after {
+            content: '';
+            position: absolute;
+            width: 26%;
+            height: 0.42rem;
+            border: 0;
+            border-radius: 999px;
+            background: currentColor;
+            transform: translate(44%, 44%) rotate(45deg);
+            transform-origin: left center;
+        }
+
         /* The site's own favicon, revealed only once it actually loads. */
         .app-tile__favicon {
             /* Fills the box rather than resting at its own intrinsic size. */
@@ -168,7 +193,7 @@
                 </a>
 
                 <a class="app-tile" href="https://search.harithkavish.com">
-                    <span class="app-tile__icon" aria-hidden="true">
+                    <span class="app-tile__icon app-tile__icon--search" aria-hidden="true">
                         <img class="app-tile__favicon" data-origin="https://search.harithkavish.com" alt="" decoding="async">
                     </span>
                     <span class="app-tile__text">
