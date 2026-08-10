@@ -71,8 +71,9 @@
 
         /* The site's own favicon, revealed only once it actually loads. */
         .app-tile__favicon {
-            max-width: 100%;
-            max-height: 100%;
+            /* Fills the box rather than resting at its own intrinsic size. */
+            width: 100%;
+            height: 100%;
             object-fit: contain;
             opacity: 0;
             transition: opacity 160ms ease;
@@ -150,6 +151,16 @@
                     <span class="app-tile__text">
                         <span class="app-tile__name">VR</span>
                         <span class="app-tile__meta">vr.harithkavish.com</span>
+                    </span>
+                </a>
+
+                <a class="app-tile" href="https://forge.harithkavish.com">
+                    <span class="app-tile__icon" aria-hidden="true">
+                        <img class="app-tile__favicon" data-origin="https://forge.harithkavish.com" alt="" decoding="async">
+                    </span>
+                    <span class="app-tile__text">
+                        <span class="app-tile__name">Forge</span>
+                        <span class="app-tile__meta">forge.harithkavish.com</span>
                     </span>
                 </a>
             </div>
