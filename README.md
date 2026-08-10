@@ -26,9 +26,14 @@ Copy one tile in `index.html` and point it at the system:
 
 The grid fills itself, so tiles reflow on their own as more are added.
 
-Icons need no configuration. Each tile tries `favicon.svg`, `favicon.ico`,
-`favicon.png` then `apple-touch-icon.png` on its own origin and shows the first
-that loads. A system serving none keeps an empty mark.
+Icons need no configuration. Each tile walks a list of conventional icon paths on
+its own origin — vector first, then the large PNGs, with `favicon.ico` last — and
+shows the first that loads. A system serving none keeps an empty mark.
+
+Logos are then measured in a canvas and scaled so the artwork fills the tile,
+since most icons ship with blank margin baked into the image. A logo that is
+already edge to edge is left alone, and one whose pixels cannot be read
+cross-origin is shown exactly as served.
 
 The `.app-tile` styles are the only CSS this page defines — everything else comes
 from the shared theme, and they are built from its tokens so they follow it.

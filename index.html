@@ -200,8 +200,97 @@
 
             document.querySelector('[data-year]').textContent = new Date().getFullYear();
 
-            // Whatever icon a system serves, in the order browsers themselves look.
-            var iconPaths = ['/favicon.svg', '/favicon.ico', '/favicon.png', '/apple-touch-icon.png'];
+            // Whatever icon a system serves, highest fidelity first: a vector, then
+            // the large PNGs, leaving the usually-tiny .ico as a last resort.
+            var iconPaths = [
+                '/favicon.svg',
+                '/icon.png',
+                '/icon-512.png',
+                '/icon-192.png',
+                '/apple-touch-icon.png',
+                '/apple-icon.png',
+                '/favicon.png',
+                '/favicon.ico'
+            ];
+
+            /*
+             * Logos are drawn with varying amounts of blank margin baked into the
+             * image. Measure where the artwork actually starts and ends, then scale
+             * it so the artwork — not its canvas — fills the tile.
+             */
+            function fillWithArtwork(icon, src) {
+                var probe = new Image();
+
+                probe.addEventListener('load', function () {
+                    var size = 64;
+                    var width = probe.naturalWidth;
+                    var height = probe.naturalHeight;
+                    if (!width || !height) {
+                        return;
+                    }
+
+                    try {
+                        var canvas = document.createElement('canvas');
+                        canvas.width = size;
+                        canvas.height = size;
+                        var context = canvas.getContext('2d', { willReadFrequently: true });
+
+                        // Match how the tile draws it, so the bounds map straight across.
+                        var fit = Math.min(size / width, size / height);
+                        var drawWidth = width * fit;
+                        var drawHeight = height * fit;
+                        context.drawImage(
+                            probe,
+                            (size - drawWidth) / 2,
+                            (size - drawHeight) / 2,
+                            drawWidth,
+                            drawHeight
+                        );
+
+                        var pixels = context.getImageData(0, 0, size, size).data;
+                        var minX = size;
+                        var minY = size;
+                        var maxX = -1;
+                        var maxY = -1;
+
+                        for (var y = 0; y < size; y++) {
+                            for (var x = 0; x < size; x++) {
+                                if (pixels[(y * size + x) * 4 + 3] > 12) {
+                                    if (x < minX) { minX = x; }
+                                    if (x > maxX) { maxX = x; }
+                                    if (y < minY) { minY = y; }
+                                    if (y > maxY) { maxY = y; }
+                                }
+                            }
+                        }
+
+                        if (maxX < 0) {
+                            return;
+                        }
+
+                        var scale = 1 / Math.max((maxX - minX + 1) / size, (maxY - minY + 1) / size);
+
+                        // Already edge to edge, or so sparse that filling would distort it.
+                        if (scale <= 1.02 || scale > 2.5) {
+                            return;
+                        }
+
+                        var shiftX = ((minX + maxX + 1) / 2 / size - 0.5) * scale * 100;
+                        var shiftY = ((minY + maxY + 1) / 2 / size - 0.5) * scale * 100;
+
+                        icon.style.transform =
+                            'translate(' + (-shiftX).toFixed(2) + '%, ' + (-shiftY).toFixed(2) + '%)' +
+                            ' scale(' + scale.toFixed(3) + ')';
+                    } catch (error) {
+                        // The image blocked a pixel read, so it stays exactly as served.
+                    }
+                });
+
+                // Measured on a separate request so a missing CORS header cannot
+                // stop the visible logo from loading.
+                probe.crossOrigin = 'anonymous';
+                probe.src = src;
+            }
 
             document.querySelectorAll('.app-tile__favicon').forEach(function (icon) {
                 var origin = icon.dataset.origin;
@@ -218,6 +307,7 @@
 
                 icon.addEventListener('load', function () {
                     icon.classList.add('is-loaded');
+                    fillWithArtwork(icon, icon.src);
                 });
                 icon.addEventListener('error', tryNext);
                 tryNext();
