@@ -3,8 +3,15 @@
 The launcher for the systems I run — [nexus.harithkavish.com](https://nexus.harithkavish.com).
 
 A single static `index.html`. No build step, no dependencies. It loads
-`style.css` and the logo from harithkavish.com, so it follows the main site's
-theme automatically — light/dark via `data-theme`, same header and footer.
+`style.css` from harithkavish.com, so it follows the main site's theme
+automatically — light/dark via `data-theme`, same header and footer.
+
+`HK Nexus.png` (1024px) is the source artwork. `logo.png` (256px),
+`apple-touch-icon.png` (180px) and `favicon.png` (96px) are generated from it:
+
+```bash
+ffmpeg -y -i "HK Nexus.png" -vf "scale=256:256:flags=lanczos" -pix_fmt rgba logo.png
+```
 
 Deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`.
 
