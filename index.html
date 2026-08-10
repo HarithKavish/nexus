@@ -194,7 +194,7 @@
 
                 <a class="app-tile" href="https://search.harithkavish.com">
                     <span class="app-tile__icon app-tile__icon--search" aria-hidden="true">
-                        <img class="app-tile__favicon" data-origin="https://search.harithkavish.com" alt="" decoding="async">
+                        <img class="app-tile__favicon" data-origin="https://search.harithkavish.com" data-icon-src="https://search.harithkavish.com/ChatGPT%20Image%20Aug%2011%2C%202026%2C%2002_36_50%20AM.png" alt="" decoding="async">
                     </span>
                     <span class="app-tile__text">
                         <span class="app-tile__name">Search</span>
@@ -358,11 +358,15 @@
 
             document.querySelectorAll('.app-tile__favicon').forEach(function (icon) {
                 var origin = icon.dataset.origin;
+                var customIconPaths = icon.dataset.iconSrc ? [icon.dataset.iconSrc] : [];
                 var attempt = 0;
+                var paths = customIconPaths.concat(iconPaths.map(function (path) {
+                    return origin + path;
+                }));
 
                 function tryNext() {
-                    if (attempt < iconPaths.length) {
-                        icon.src = origin + iconPaths[attempt++];
+                    if (attempt < paths.length) {
+                        icon.src = paths[attempt++];
                     } else {
                         // Nothing served an icon, so the tile keeps an empty mark.
                         icon.parentNode.classList.add('is-empty');
