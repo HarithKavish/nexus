@@ -166,6 +166,26 @@
                         <span class="app-tile__meta">forge.harithkavish.com</span>
                     </span>
                 </a>
+
+                <a class="app-tile" href="https://search.harithkavish.com">
+                    <span class="app-tile__icon" aria-hidden="true">
+                        <img class="app-tile__favicon" data-origin="https://search.harithkavish.com" alt="" decoding="async">
+                    </span>
+                    <span class="app-tile__text">
+                        <span class="app-tile__name">Search</span>
+                        <span class="app-tile__meta">search.harithkavish.com</span>
+                    </span>
+                </a>
+
+                <a class="app-tile" href="https://account.harithkavish.com">
+                    <span class="app-tile__icon" aria-hidden="true">
+                        <img class="app-tile__favicon" data-origin="https://account.harithkavish.com" alt="" decoding="async">
+                    </span>
+                    <span class="app-tile__text">
+                        <span class="app-tile__name">Account</span>
+                        <span class="app-tile__meta">account.harithkavish.com</span>
+                    </span>
+                </a>
             </div>
         </main>
 
@@ -202,6 +222,22 @@
             });
 
             document.querySelector('[data-year]').textContent = new Date().getFullYear();
+
+            // Order the tiles by name, so new ones can be added anywhere in the markup.
+            var grid = document.querySelector('.app-grid');
+            if (grid) {
+                Array.prototype.slice.call(grid.querySelectorAll('.app-tile'))
+                    .sort(function (first, second) {
+                        return first.querySelector('.app-tile__name').textContent.localeCompare(
+                            second.querySelector('.app-tile__name').textContent,
+                            undefined,
+                            { sensitivity: 'base', numeric: true }
+                        );
+                    })
+                    .forEach(function (tile) {
+                        grid.appendChild(tile);
+                    });
+            }
 
             // Whatever icon a system serves, highest fidelity first: a vector, then
             // the large PNGs, leaving the usually-tiny .ico as a last resort.
