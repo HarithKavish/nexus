@@ -20,7 +20,7 @@ Deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `mai
 Copy one tile in `index.html` and point it at the system:
 
 ```html
-<a class="app-tile" href="https://api.harithkavish.com">
+<a class="app-tile" href="https://api.harithkavish.com" target="_blank" rel="noopener noreferrer">
     <span class="app-tile__icon" aria-hidden="true">
         <img class="app-tile__favicon" data-origin="https://api.harithkavish.com" alt="" decoding="async">
     </span>
