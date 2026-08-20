@@ -17,25 +17,39 @@ Deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `mai
 
 ## Adding a system
 
-Copy one tile in `index.html` and point it at the system:
+Tiles are generated from data, not markup. There are two sources and Nexus shows
+the union of both.
 
-```html
-<a class="app-tile" href="https://api.harithkavish.com" target="_blank" rel="noopener noreferrer">
-    <span class="app-tile__icon" aria-hidden="true">
-        <img class="app-tile__favicon" data-origin="https://api.harithkavish.com" alt="" decoding="async">
-    </span>
-    <span class="app-tile__text">
-        <span class="app-tile__name">API</span>
-        <span class="app-tile__meta">api.harithkavish.com</span>
-    </span>
-</a>
+**The main site.** Nexus loads `site-data.js` from harithkavish.com and reads its
+`ecosystem` array, so a subdomain added there appears here with no edit to this
+repo. That file is the one worth keeping current.
+
+**A local list**, in the script at the bottom of `index.html`, so Nexus still
+renders if that file is unreachable or restructured:
+
+```js
+var LOCAL_APPS = [
+    { slug: "vm", name: "VM" },
+    { slug: "forge", name: "Forge" }
+];
 ```
 
-The grid fills itself, so tiles reflow on their own as more are added.
+A slug is all that is needed — the link, origin and host label are derived as
+`https://<slug>.harithkavish.com`. Entries are merged by slug with the local one
+winning, sorted by name, and anything in `EXCLUDED` is dropped (Nexus itself).
+
+Because tiles are built in the browser, the grid is empty with JavaScript off.
+The main site renders the same way.
+
+## Icons
 
 Icons need no configuration. Each tile walks a list of conventional icon paths on
 its own origin — vector first, then the large PNGs, with `favicon.ico` last — and
 shows the first that loads. A system serving none keeps an empty mark.
+
+A system whose icon lives elsewhere gets an entry in `ICON_OVERRIDES`, keyed by
+slug. Blog needs one because it declares the main site favicon rather than
+serving its own.
 
 Logos are then measured in a canvas and scaled so the artwork fills the tile,
 since most icons ship with blank margin baked into the image. A logo that is
