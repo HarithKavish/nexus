@@ -21,8 +21,13 @@
     <link rel="canonical" href="https://nexus.harithkavish.com/">
     <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <!-- Shared theme from the main site, so Nexus follows it automatically. -->
-    <link rel="stylesheet" href="https://harithkavish.com/style.css">
+    <!-- The shared design system. Nexus adds only what the system does not have. -->
+    <link rel="stylesheet" href="https://harithkavish.com/design-system/v1.0.0/tokens.css">
+    <link rel="stylesheet" href="https://harithkavish.com/design-system/v1.0.0/base.css">
+    <link rel="stylesheet" href="https://harithkavish.com/design-system/v1.0.0/components.css">
+    <link rel="stylesheet" href="https://harithkavish.com/design-system/v1.0.0/utils.css">
+    <script src="https://harithkavish.com/design-system/v1.0.0/theme-toggle.js"></script>
+    <script src="https://harithkavish.com/design-system/v1.0.0/harith-shell.js"></script>
     <style>
         /* The only component the shared theme doesn't have: an app tile. Built from its tokens. */
         .app-grid {
@@ -43,14 +48,14 @@
             padding: 0.5rem 0.5rem 0.95rem;
             text-align: center;
             background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 1.4rem;
-            box-shadow: var(--shadow);
+            border: var(--border-hairline) solid var(--border);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
         }
 
         .app-tile:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-strong);
+            transform: translateY(var(--lift-hover-card));
+            box-shadow: var(--shadow-card-hover);
         }
 
         .app-tile__icon {
@@ -68,8 +73,8 @@
             content: '';
             width: 42%;
             height: 42%;
-            border: 1px dashed var(--border);
-            border-radius: 1.1rem;
+            border: var(--border-hairline) dashed var(--border);
+            border-radius: var(--radius-card-small);
         }
 
         .app-tile__icon--search.is-empty {
@@ -132,27 +137,15 @@
             white-space: nowrap;
         }
     </style>
-    <script>
-        document.documentElement.dataset.theme = localStorage.getItem('harithkavish-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    </script>
     <title>Nexus — Harith Kavish</title>
 </head>
 <body data-page="nexus">
     <div class="site-shell">
-        <header class="site-header">
-            <div class="site-header__inner">
-                <a class="brand" href="https://harithkavish.com/">
-                    <img class="brand__mark" src="/logo.png" alt="" aria-hidden="true">
-                    <span class="brand__text">
-                        <span class="brand__name">Harith Kavish</span>
-                        <span class="brand__descriptor">Nexus</span>
-                    </span>
-                </a>
-                <div class="site-header__actions">
-                    <button type="button" class="theme-toggle" data-theme-toggle="true" aria-label="Switch to dark mode">Dark mode</button>
-                </div>
-            </div>
-        </header>
+        <harith-header
+            site-title="Harith Kavish"
+            site-tagline="Nexus"
+            brand-href="https://harithkavish.com/"
+            brand-mark="/logo.png"></harith-header>
 
         <main class="site-main">
             <div class="section-head">
@@ -164,42 +157,15 @@
             <div class="app-grid"></div>
         </main>
 
-        <footer class="site-footer">
-            <div class="site-footer__inner">
-                <p class="site-footer__copy">© <span data-year>2026</span> Harith Kavish</p>
-                <nav class="site-footer__nav" aria-label="Footer">
-                    <a class="site-nav__link" href="https://harithkavish.com/">Home</a>
-                    <a class="site-nav__link" href="https://harithkavish.com/status.html">Status</a>
-                    <a class="site-nav__link" href="https://harithkavish.com/legal.html">Legal</a>
-                </nav>
-            </div>
-        </footer>
+        <harith-footer
+            copyright-text="Harith Kavish"
+            links='[{"label":"Home","href":"https://harithkavish.com/"},{"label":"Status","href":"https://harithkavish.com/status.html"},{"label":"Legal","href":"https://harithkavish.com/legal.html"}]'></harith-footer>
     </div>
 
     <!-- The main site's ecosystem list, so a subdomain added there appears here too. -->
     <script src="https://harithkavish.com/site-data.js"></script>
     <script>
         (function () {
-            var key = 'harithkavish-theme';
-            var button = document.querySelector('[data-theme-toggle]');
-
-            function applyTheme(theme, persist) {
-                document.documentElement.dataset.theme = theme;
-                if (persist) {
-                    localStorage.setItem(key, theme);
-                }
-                button.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
-                button.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-            }
-
-            applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light', false);
-
-            button.addEventListener('click', function () {
-                applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true);
-            });
-
-            document.querySelector('[data-year]').textContent = new Date().getFullYear();
-
             /*
              * Tiles are built from data rather than markup. The list is the union of
              * the main site's ecosystem array — so a subdomain added there turns up
