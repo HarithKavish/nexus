@@ -215,7 +215,11 @@
                 { slug: 'blog', name: 'Blog' },
                 { slug: 'timeline', name: 'Timeline' },
                 { slug: 'store', name: 'Store' },
-                { slug: 'account', name: 'Account' }
+                { slug: 'account', name: 'Account' },
+                // Project sites on the main domain rather than subdomains of it,
+                // so these carry an explicit href instead of deriving one.
+                { slug: 'ai-lab', name: 'AI Chat', href: 'https://harithkavish.com/ai-lab/' },
+                { slug: 'converse', name: 'Converse', href: 'https://harithkavish.com/converse/' }
             ];
 
             // The launcher never lists itself.
@@ -225,7 +229,12 @@
             var ICON_OVERRIDES = {
                 search: 'https://search.harithkavish.com/ChatGPT%20Image%20Aug%2011%2C%202026%2C%2002_36_50%20AM.png',
                 account: 'https://account.harithkavish.com/hk-account-logo.png',
-                blog: 'https://harithkavish.com/favicon.svg'
+                blog: 'https://harithkavish.com/favicon.svg',
+                // Both ship a zero-byte favicon.ico and point at the main site's
+                // mark in their own markup, so there is nothing of their own to
+                // find. Replace these once either serves real artwork.
+                'ai-lab': 'https://harithkavish.com/favicon.svg',
+                converse: 'https://harithkavish.com/favicon.svg'
             };
 
             function describe(slug, name, href) {
